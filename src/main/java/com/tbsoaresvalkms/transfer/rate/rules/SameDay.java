@@ -6,16 +6,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import static java.time.temporal.ChronoUnit.DAYS;
 
 @Component
-public class BetweenTwentyAndThirtyDays extends RateRule {
+public class SameDay extends RateRule {
 
     private RateQuery rateQuery;
 
-    public BetweenTwentyAndThirtyDays(@Qualifier("betweenThirtyAndFortyDays") RateRule rateRule) {
+    public SameDay(@Qualifier("untilTenDays") RateRule rateRule) {
         this.nextRateRule = rateRule;
     }
 
@@ -28,15 +25,16 @@ public class BetweenTwentyAndThirtyDays extends RateRule {
     private Boolean shouldCalculateRate() {
         long daysBetween = rateQuery.daysSchedulingForTransfer();
 
-        Integer startDay = 20;
-        Integer endDay = 30;
-        return daysBetween > startDay && daysBetween <= endDay;
+        Integer difference = 0;
+        return daysBetween == difference;
     }
 
     private BigDecimal calculateRate() {
         BigDecimal value = rateQuery.getValue();
 
-        Double rate = 0.06;
-        return value.multiply(BigDecimal.valueOf(rate));
+        Double rate = 0.03;
+        return value
+                .multiply(BigDecimal.valueOf(rate))
+                .add(BigDecimal.valueOf(3));
     }
 }

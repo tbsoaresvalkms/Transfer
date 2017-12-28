@@ -2,15 +2,18 @@ package com.tbsoaresvalkms.transfer.rate.rules;
 
 import com.tbsoaresvalkms.transfer.rate.RateQuery;
 import com.tbsoaresvalkms.transfer.rate.RateRule;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Component
 public class FortyDaysAndHundredThousand extends RateRule {
 
     private RateQuery rateQuery;
 
-    public FortyDaysAndHundredThousand(RateRule rateRule) {
+    public FortyDaysAndHundredThousand(@Qualifier("rateNotFound") RateRule rateRule) {
         this.nextRateRule = rateRule;
     }
 
@@ -26,13 +29,10 @@ public class FortyDaysAndHundredThousand extends RateRule {
     }
 
     private Boolean greaterThanFortyDays() {
-        LocalDate scheduling = rateQuery.getScheduling();
-        LocalDate transfer = rateQuery.getTransfer();
+        long daysBetween = rateQuery.daysSchedulingForTransfer();
 
         Integer startDay = 40;
-        LocalDate fortyDaysAfter = scheduling.plusDays(startDay);
-
-        return transfer.isAfter(fortyDaysAfter);
+        return daysBetween > startDay;
     }
 
     private Boolean valueGreaterThanOneHundredThousand() {

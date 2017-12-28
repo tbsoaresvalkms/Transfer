@@ -2,17 +2,20 @@ package com.tbsoaresvalkms.transfer.rate.rules;
 
 import com.tbsoaresvalkms.transfer.rate.RateQuery;
 import com.tbsoaresvalkms.transfer.rate.RateRule;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
+@Component
 public class BetweenTenAndTwentyDays extends RateRule {
 
     private RateQuery rateQuery;
 
-    public BetweenTenAndTwentyDays(RateRule rateRule) {
+    public BetweenTenAndTwentyDays(@Qualifier("betweenTwentyAndThirtyDays") RateRule rateRule) {
         this.nextRateRule = rateRule;
     }
 
@@ -23,13 +26,10 @@ public class BetweenTenAndTwentyDays extends RateRule {
     }
 
     private Boolean shouldCalculateRate() {
-        LocalDate scheduling = rateQuery.getScheduling();
-        LocalDate transfer = rateQuery.getTransfer();
+        long daysBetween = rateQuery.daysSchedulingForTransfer();
 
-        long daysBetween = DAYS.between(scheduling, transfer);
         Integer startDay = 10;
         Integer endDay = 20;
-
         return daysBetween > startDay && daysBetween <= endDay;
     }
 
