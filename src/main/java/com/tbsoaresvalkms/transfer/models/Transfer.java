@@ -12,14 +12,21 @@ import java.time.LocalDate;
 @Setter
 @Builder
 public class Transfer {
-    private Account sender;
-    private Account receiver;
+    private Long sender;
+    private Long receiver;
     private BigDecimal value;
     private BigDecimal rate;
     private LocalDate transfer;
     private LocalDate scheduling;
 
     public static Transfer convertToTransfer(TransferDTO transfer) {
-        return null;
+        return Transfer.builder()
+                .sender(transfer.getSender())
+                .receiver(transfer.getReceiver())
+                .value(transfer.getValue())
+                .rate(transfer.getRate())
+                .transfer(transfer.getTransfer())
+                .scheduling(transfer.getScheduling())
+                .build();
     }
 }

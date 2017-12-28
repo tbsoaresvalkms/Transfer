@@ -21,14 +21,13 @@ public class TransferService {
     }
 
     public Transfer create(TransferDTO transferDTO) {
-
         return Stream.of(transferDTO)
                 .map(Transfer::convertToTransfer)
-                .map(this::setRate)
                 .map(this::setTodayDate)
+                .map(this::setRate)
                 .map(this::saveInRepository)
                 .findFirst()
-                .get();
+                .orElseThrow(RuntimeException::new);
     }
 
     private Transfer setRate(Transfer transfer) {
