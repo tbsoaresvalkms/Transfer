@@ -1,6 +1,8 @@
-package com.tbsoaresvalkms.transfer.rates;
+package com.tbsoaresvalkms.transfer.rate.rules;
 
 import com.tbsoaresvalkms.transfer.exceptions.RateNotFoundException;
+import com.tbsoaresvalkms.transfer.rate.RateQuery;
+import com.tbsoaresvalkms.transfer.rate.RateRule;
 
 import java.math.BigDecimal;
 

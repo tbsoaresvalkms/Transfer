@@ -1,4 +1,4 @@
-package com.tbsoaresvalkms.transfer.rates;
+package com.tbsoaresvalkms.transfer.rate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

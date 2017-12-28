@@ -1,12 +1,12 @@
-package com.tbsoaresvalkms.transfer.rates;
+package com.tbsoaresvalkms.transfer.rate.rules;
+
+import com.tbsoaresvalkms.transfer.rate.RateQuery;
+import com.tbsoaresvalkms.transfer.rate.RateRule;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class FortyDaysAndHundredThousand extends RateRule {
-    private final Integer fortyDays = 40;
-    private final Integer minimumValue = 100_000;
-    private final Double rate = 0.02;
 
     private RateQuery rateQuery;
 
@@ -29,7 +29,8 @@ public class FortyDaysAndHundredThousand extends RateRule {
         LocalDate scheduling = rateQuery.getScheduling();
         LocalDate transfer = rateQuery.getTransfer();
 
-        LocalDate fortyDaysAfter = scheduling.plusDays(fortyDays);
+        Integer startDay = 40;
+        LocalDate fortyDaysAfter = scheduling.plusDays(startDay);
 
         return transfer.isAfter(fortyDaysAfter);
     }
@@ -37,12 +38,14 @@ public class FortyDaysAndHundredThousand extends RateRule {
     private Boolean valueGreaterThanOneHundredThousand() {
         BigDecimal value = rateQuery.getValue();
 
+        Integer minimumValue = 100_000;
         return value.compareTo(BigDecimal.valueOf(minimumValue)) > 0;
     }
 
     private BigDecimal calculateRate() {
         BigDecimal value = rateQuery.getValue();
 
+        Double rate = 0.02;
         return value.multiply(BigDecimal.valueOf(rate));
     }
 }

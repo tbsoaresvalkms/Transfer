@@ -1,5 +1,7 @@
-package com.tbsoaresvalkms.transfer.rates;
+package com.tbsoaresvalkms.transfer.rate.rules;
 
+import com.tbsoaresvalkms.transfer.rate.RateQuery;
+import com.tbsoaresvalkms.transfer.rate.RateRule;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +28,9 @@ public class FortyDaysAndHundredThousandTest {
 
     @Test
     public void whenDateNotGreaterThanFortyDaysShouldCallNextRule() {
-        RateQuery rateQuery = builderDateNotGreaterThanFortyDays();
+        Integer daysAfterToday = 40;
+        Double value = 150_000.0;
+        RateQuery rateQuery = buildRateQueryWithTransferDateAndValue(daysAfterToday, value);
 
         fortyDaysAndOneHundredThousand.calculate(rateQuery);
 
@@ -36,7 +40,10 @@ public class FortyDaysAndHundredThousandTest {
 
     @Test
     public void whenValueNotGreaterThanHundredThousandShouldCallNextRule() {
-        RateQuery rateQuery = builderValueNotGreaterThanHundredThousand();
+        Integer daysAfterToday = 45;
+        Double value = 100_000.0;
+
+        RateQuery rateQuery = buildRateQueryWithTransferDateAndValue(daysAfterToday, value);
 
         fortyDaysAndOneHundredThousand.calculate(rateQuery);
 
@@ -46,9 +53,11 @@ public class FortyDaysAndHundredThousandTest {
 
     @Test
     public void whenDateGreateThanFortyDaysAndValueGreatThanHundredThousandShouldCalculateRate() {
-        Double rate = 0.02;
+        Integer daysAfterToday = 45;
+        Double value = 100_000.01;
+        RateQuery rateQuery = buildRateQueryWithTransferDateAndValue(daysAfterToday, value);
 
-        RateQuery rateQuery = builderDateGreaterThanFortyDaysAndValueGreaterThanHundredThousand();
+        Double rate = 0.02;
         BigDecimal expectedValue = rateQuery.getValue().multiply(BigDecimal.valueOf(rate));
 
         BigDecimal calculatedValue = fortyDaysAndOneHundredThousand.calculate(rateQuery);
@@ -58,7 +67,10 @@ public class FortyDaysAndHundredThousandTest {
 
     @Test
     public void whenCallNextRuleShouldReturnNextRuleValue() {
-        RateQuery rateQuery = builderValueNotGreaterThanHundredThousand();
+        Integer daysAfterToday = 40;
+        Double value = 100_000.00;
+        RateQuery rateQuery = buildRateQueryWithTransferDateAndValue(daysAfterToday, value);
+
         BigDecimal expectedValue = BigDecimal.valueOf(3_000);
         Mockito.when(nextRateRule.calculate(rateQuery)).thenReturn(expectedValue);
 
@@ -69,27 +81,11 @@ public class FortyDaysAndHundredThousandTest {
         Assert.assertEquals(expectedValue, calculatedValue);
     }
 
-    private RateQuery builderDateNotGreaterThanFortyDays() {
+    private RateQuery buildRateQueryWithTransferDateAndValue(Integer days, Double value) {
         return RateQuery.builder()
-                .scheduling(LocalDate.of(2018, 01, 01))
-                .transfer(LocalDate.of(2018, 02, 10))
-                .value(BigDecimal.valueOf(150_000))
-                .build();
-    }
-
-    private RateQuery builderValueNotGreaterThanHundredThousand() {
-        return RateQuery.builder()
-                .scheduling(LocalDate.of(2018, 01, 01))
-                .transfer(LocalDate.of(2018, 05, 05))
-                .value(BigDecimal.valueOf(100_000))
-                .build();
-    }
-
-    private RateQuery builderDateGreaterThanFortyDaysAndValueGreaterThanHundredThousand() {
-        return RateQuery.builder()
-                .scheduling(LocalDate.of(2018, 01, 01))
-                .transfer(LocalDate.of(2018, 02, 11))
-                .value(BigDecimal.valueOf(100_001))
+                .scheduling(LocalDate.now())
+                .transfer(LocalDate.now().plusDays(days))
+                .value(BigDecimal.valueOf(value))
                 .build();
     }
 }
