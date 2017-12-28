@@ -10,14 +10,21 @@ public class RateNotFoundTest {
 
     @InjectMocks
     private RateNotFound rateNotFound;
+    private RateQuery rateQuery;
 
     @Before
     public void init() {
         MockitoAnnotations.initMocks(this);
+        rateQuery = builderRateQueryEmpty();
     }
 
     @Test(expected = RateNotFoundException.class)
     public void whenExecuteIsCalledShouldThrowException() {
-        rateNotFound.execute();
+        rateNotFound.calculate(rateQuery);
     }
+
+    private RateQuery builderRateQueryEmpty() {
+        return RateQuery.builder().build();
+    }
+
 }
