@@ -1,4 +1,6 @@
-package com.tbsoaresvalkms.transfer.rate;
+package com.tbsoaresvalkms.transfer.rate.rules;
+
+import com.tbsoaresvalkms.transfer.rate.RateQuery;
 
 import java.math.BigDecimal;
 

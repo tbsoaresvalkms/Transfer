@@ -1,7 +1,6 @@
 package com.tbsoaresvalkms.transfer.rate.rules;
 
 import com.tbsoaresvalkms.transfer.rate.RateQuery;
-import com.tbsoaresvalkms.transfer.rate.RateRule;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 

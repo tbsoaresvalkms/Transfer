@@ -2,7 +2,6 @@ package com.tbsoaresvalkms.transfer.rate.rules;
 
 import com.tbsoaresvalkms.transfer.exceptions.RateNotFoundException;
 import com.tbsoaresvalkms.transfer.rate.RateQuery;
-import com.tbsoaresvalkms.transfer.rate.RateRule;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;

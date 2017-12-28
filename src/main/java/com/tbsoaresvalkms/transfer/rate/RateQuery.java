@@ -2,6 +2,7 @@ package com.tbsoaresvalkms.transfer.rate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 @Getter
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 public class RateQuery {
     private BigDecimal value;
     private LocalDate transfer;
