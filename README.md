@@ -19,15 +19,11 @@ Para verificar os resources da API, olhe aqui: [Index](doc/index.md)
 `mvn spring-boot:run`
 
 ## Executando os tests
-(A aplicação precisa estar rodando por causa do teste de integração)
-
 `git clone https://github.com/tbsoaresvalkms/transfer.git`
 
 `cd transfer`
 
 `mvn clean`
-
-`mvn spring-boot:run`
 
 `mvn test`
 
