@@ -12,13 +12,9 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransferDTO {
-    @NotNull
     private Long sender;
-    @NotNull
     private Long receiver;
-    @NotNull
     private BigDecimal value;
-    @NotNull
     private LocalDate transfer;
     private LocalDate scheduling;
     private BigDecimal rate;

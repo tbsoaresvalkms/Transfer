@@ -12,14 +12,16 @@ import java.util.Map;
 public class TransferRepository {
     private static final Map<Long, List<Transfer>> transfers = new HashMap<>();
 
-    public void save(Transfer transfer) {
+    public Transfer save(Transfer transfer) {
         Long sender = transfer.getSender();
 
         transfers.computeIfAbsent(sender, account -> transfers.put(account, new ArrayList<>()));
         transfers.get(sender).add(transfer);
+
+        return transfer;
     }
 
     public List<Transfer> findAll(Long account) {
-        return transfers.get(account);
+        return transfers.getOrDefault(account, new ArrayList<>());
     }
 }

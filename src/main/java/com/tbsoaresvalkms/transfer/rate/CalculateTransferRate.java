@@ -1,7 +1,7 @@
 package com.tbsoaresvalkms.transfer.rate;
 
-import com.tbsoaresvalkms.transfer.models.Transfer;
 import com.tbsoaresvalkms.transfer.rate.rules.RateRule;
+import com.tbsoaresvalkms.transfer.resources.TransferDTO;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -16,15 +16,15 @@ public class CalculateTransferRate {
         this.rateRule = rateRule;
     }
 
-    public BigDecimal process(Transfer transfer) {
-        return rateRule.calculate(convert(transfer));
+    public BigDecimal process(TransferDTO transferDTO) {
+        return rateRule.calculate(convert(transferDTO));
     }
 
-    private RateQuery convert(Transfer transfer) {
+    private RateQuery convert(TransferDTO transferDTO) {
         return RateQuery.builder()
-                .scheduling(transfer.getScheduling())
-                .transfer(transfer.getTransfer())
-                .value(transfer.getValue())
+                .scheduling(transferDTO.getScheduling())
+                .transfer(transferDTO.getTransfer())
+                .value(transferDTO.getValue())
                 .build();
     }
 

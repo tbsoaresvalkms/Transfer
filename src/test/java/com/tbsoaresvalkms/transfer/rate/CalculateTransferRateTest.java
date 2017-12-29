@@ -1,7 +1,7 @@
 package com.tbsoaresvalkms.transfer.rate;
 
-import com.tbsoaresvalkms.transfer.models.Transfer;
 import com.tbsoaresvalkms.transfer.rate.rules.RateRule;
+import com.tbsoaresvalkms.transfer.resources.TransferDTO;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ public class CalculateTransferRateTest {
 
     @Test
     public void shouldCallNextRateRuleConvertingTransferToRateQuery() {
-        Transfer transfer = Transfer.builder()
+        TransferDTO transfer = TransferDTO.builder()
                 .scheduling(LocalDate.now())
                 .transfer(LocalDate.now().plusDays(1))
                 .value(BigDecimal.valueOf(100_000))
@@ -49,7 +49,7 @@ public class CalculateTransferRateTest {
 
     @Test
     public void shouldReturnNextRateRuleReturn() {
-        Transfer transfer = Transfer.builder().build();
+        TransferDTO transfer = TransferDTO.builder().build();
         RateQuery rateQuery = RateQuery.builder().build();
         BigDecimal expectedValue = BigDecimal.valueOf(100_000);
 
