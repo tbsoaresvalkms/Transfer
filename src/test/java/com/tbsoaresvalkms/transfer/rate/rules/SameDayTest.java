@@ -39,12 +39,12 @@ public class SameDayTest {
     @Test
     public void whenDateIsSameDayShouldCalculateRate() {
         Double fixedValue = 3.0;
-        Double rate = 0.03;
+        Double percentage = 0.03;
         Integer daysAfterToday = 0;
         RateQuery rateQuery = buildRateQueryWithTransferDateAndValue(daysAfterToday, 100_000.0);
 
         BigDecimal expectedValue = rateQuery.getValue()
-                .multiply(BigDecimal.valueOf(rate))
+                .multiply(BigDecimal.valueOf(percentage))
                 .add(BigDecimal.valueOf(fixedValue));
 
         BigDecimal calculatedValue = sameDay.calculate(rateQuery);
