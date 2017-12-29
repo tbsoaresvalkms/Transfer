@@ -1,7 +1,6 @@
 package com.tbsoaresvalkms.transfer.commands;
 
 import com.tbsoaresvalkms.transfer.models.Transfer;
-import com.tbsoaresvalkms.transfer.rate.CalculateTransferRate;
 import com.tbsoaresvalkms.transfer.repositories.TransferRepository;
 import com.tbsoaresvalkms.transfer.resources.TransferDTO;
 import org.junit.Assert;
@@ -13,9 +12,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,7 +36,7 @@ public class TransferFindAllTest {
     @Test
     public void itShouldCallRepositoryFindAll() {
         transferFindAll.execute(123L);
-        Mockito.verify(transferRepository).findAll(123L);
+        Mockito.verify(transferRepository).findAllBySender(123L);
         Mockito.verifyNoMoreInteractions(transferRepository);
     }
 
@@ -50,7 +46,7 @@ public class TransferFindAllTest {
         Transfer transferTwo = Transfer.builder().sender(2L).build();
 
         List<Transfer> transfers = Arrays.asList(transferOne, transferTwo);
-        Mockito.when(transferRepository.findAll(123L)).thenReturn(transfers);
+        Mockito.when(transferRepository.findAllBySender(123L)).thenReturn(transfers);
 
         transferFindAll.execute(123L);
 
@@ -68,7 +64,7 @@ public class TransferFindAllTest {
         TransferDTO transferDTOtwo = TransferDTO.builder().sender(2L).build();
 
         List<Transfer> transfers = Arrays.asList(transferOne, transferTwo);
-        Mockito.when(transferRepository.findAll(123L)).thenReturn(transfers);
+        Mockito.when(transferRepository.findAllBySender(123L)).thenReturn(transfers);
         Mockito.when(modelMapper.map(transferOne, TransferDTO.class)).thenReturn(transferDTOone);
         Mockito.when(modelMapper.map(transferTwo, TransferDTO.class)).thenReturn(transferDTOtwo);
 

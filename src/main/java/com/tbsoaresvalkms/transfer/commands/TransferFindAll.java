@@ -2,6 +2,7 @@ package com.tbsoaresvalkms.transfer.commands;
 
 import com.tbsoaresvalkms.transfer.models.Transfer;
 import com.tbsoaresvalkms.transfer.repositories.TransferRepository;
+import com.tbsoaresvalkms.transfer.repositories.TransferRepositoryCollection;
 import com.tbsoaresvalkms.transfer.resources.TransferDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,7 @@ public class TransferFindAll {
 
     public List<TransferDTO> execute(Long account) {
         return optional(account)
-                .map(transferRepository::findAll)
+                .map(transferRepository::findAllBySender)
                 .map(this::toResource)
                 .orElseThrow(RuntimeException::new);
     }

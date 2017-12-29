@@ -3,6 +3,7 @@ package com.tbsoaresvalkms.transfer.commands;
 import com.tbsoaresvalkms.transfer.models.Transfer;
 import com.tbsoaresvalkms.transfer.rate.CalculateTransferRate;
 import com.tbsoaresvalkms.transfer.repositories.TransferRepository;
+import com.tbsoaresvalkms.transfer.repositories.TransferRepositoryCollection;
 import com.tbsoaresvalkms.transfer.resources.TransferDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

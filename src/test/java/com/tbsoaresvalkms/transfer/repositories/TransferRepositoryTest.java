@@ -9,11 +9,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class TransferRepositoryTest {
-    private TransferRepository transferRepository;
+    private TransferRepositoryCollection transferRepository;
 
     @Before
     public void init() {
-        transferRepository = new TransferRepository();
+        transferRepository = new TransferRepositoryCollection();
         transferRepository.clean();
     }
 
@@ -44,7 +44,7 @@ public class TransferRepositoryTest {
         transferRepository.save(transferOne);
         transferRepository.save(transferTwo);
 
-        List<Transfer> allAccounts = transferRepository.findAll(123L);
+        List<Transfer> allAccounts = transferRepository.findAllBySender(123L);
 
         Assert.assertEquals(2, allAccounts.size());
         Assert.assertEquals(transferOne.getValue(), allAccounts.get(0).getValue());
@@ -53,7 +53,7 @@ public class TransferRepositoryTest {
 
     @Test
     public void whenDontHaveTransferShouldBeEmptyList() {
-        List<Transfer> allAccounts = transferRepository.findAll(123L);
+        List<Transfer> allAccounts = transferRepository.findAllBySender(123L);
 
         Assert.assertEquals(0, allAccounts.size());
     }
