@@ -9,28 +9,26 @@ import java.math.BigDecimal;
 @Component
 public class FortyDaysAndHundredThousand extends RateRule {
 
-    private RateQuery rateQuery;
-
     public FortyDaysAndHundredThousand(@Qualifier("rateNotFound") RateRule rateRule) {
         this.nextRateRule = rateRule;
     }
 
-    @Override
-    public BigDecimal calculate(RateQuery rateQuery) {
-        this.rateQuery = rateQuery;
-
-        return shouldCalculateRate() ? calculateRate() : nextRateRule.calculate(rateQuery);
+    protected Boolean conditional() {
+        return greaterThanFortyDays() && valueGreaterThanOneHundredThousand();
     }
 
-    private Boolean shouldCalculateRate() {
-        return greaterThanFortyDays() && valueGreaterThanOneHundredThousand();
+    protected BigDecimal calculate() {
+        BigDecimal value = rateQuery.getValue();
+
+        Double percentage = 0.02;
+        return value.multiply(BigDecimal.valueOf(percentage));
     }
 
     private Boolean greaterThanFortyDays() {
         long daysBetween = rateQuery.daysSchedulingForTransfer();
 
-        Integer startDay = 40;
-        return daysBetween > startDay;
+        Integer differenceStart = 40;
+        return daysBetween > differenceStart;
     }
 
     private Boolean valueGreaterThanOneHundredThousand() {
@@ -40,10 +38,4 @@ public class FortyDaysAndHundredThousand extends RateRule {
         return value.compareTo(BigDecimal.valueOf(minimumValue)) > 0;
     }
 
-    private BigDecimal calculateRate() {
-        BigDecimal value = rateQuery.getValue();
-
-        Double rate = 0.02;
-        return value.multiply(BigDecimal.valueOf(rate));
-    }
 }

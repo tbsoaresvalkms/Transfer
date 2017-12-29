@@ -9,30 +9,22 @@ import java.math.BigDecimal;
 @Component
 public class BetweenTenAndTwentyDays extends RateRule {
 
-    private RateQuery rateQuery;
-
     public BetweenTenAndTwentyDays(@Qualifier("betweenTwentyAndThirtyDays") RateRule rateRule) {
         this.nextRateRule = rateRule;
     }
 
-    @Override
-    public BigDecimal calculate(RateQuery rateQuery) {
-        this.rateQuery = rateQuery;
-        return shouldCalculateRate() ? calculateRate() : nextRateRule.calculate(rateQuery);
-    }
-
-    private Boolean shouldCalculateRate() {
+    protected Boolean conditional() {
         long daysBetween = rateQuery.daysSchedulingForTransfer();
 
-        Integer startDay = 10;
-        Integer endDay = 20;
-        return daysBetween > startDay && daysBetween <= endDay;
+        Integer differenceStart = 10;
+        Integer differenceEnd = 20;
+        return daysBetween > differenceStart && daysBetween <= differenceEnd;
     }
 
-    private BigDecimal calculateRate() {
+    protected BigDecimal calculate() {
         BigDecimal value = rateQuery.getValue();
 
-        Double rate = 0.08;
-        return value.multiply(BigDecimal.valueOf(rate));
+        Double percentage = 0.08;
+        return value.multiply(BigDecimal.valueOf(percentage));
     }
 }

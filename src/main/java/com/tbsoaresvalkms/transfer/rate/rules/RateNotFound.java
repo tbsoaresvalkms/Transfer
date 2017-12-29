@@ -8,8 +8,14 @@ import java.math.BigDecimal;
 
 @Component
 public class RateNotFound extends RateRule {
+
     @Override
-    public BigDecimal calculate(RateQuery rateQuery) {
+    protected Boolean conditional() {
+        return true;
+    }
+
+    @Override
+    protected BigDecimal calculate() {
         throw new RateNotFoundException("There is no applicable fee");
     }
 }

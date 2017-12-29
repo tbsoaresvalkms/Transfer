@@ -49,11 +49,11 @@ public class BetweenThirtyAndFortyDaysTest {
 
     @Test
     public void whenDateGreateThanThirtyDaysAndNotGreateThanFortyDaysShouldCalculateRate() {
-        Double rate = 0.04;
+        Double percentage = 0.04;
         Integer daysAfterToday = 40;
         RateQuery rateQuery = buildRateQueryWithTransferDateAndValue(daysAfterToday, 100_000.0);
 
-        BigDecimal expectedValue = rateQuery.getValue().multiply(BigDecimal.valueOf(rate));
+        BigDecimal expectedValue = rateQuery.getValue().multiply(BigDecimal.valueOf(percentage));
 
         BigDecimal calculatedValue = betweenThirtyAndFortyDays.calculate(rateQuery);
 

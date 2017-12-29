@@ -9,31 +9,23 @@ import java.math.BigDecimal;
 @Component
 public class SameDay extends RateRule {
 
-    private RateQuery rateQuery;
-
     public SameDay(@Qualifier("untilTenDays") RateRule rateRule) {
         this.nextRateRule = rateRule;
     }
 
-    @Override
-    public BigDecimal calculate(RateQuery rateQuery) {
-        this.rateQuery = rateQuery;
-        return shouldCalculateRate() ? calculateRate() : nextRateRule.calculate(rateQuery);
-    }
-
-    private Boolean shouldCalculateRate() {
+    protected Boolean conditional() {
         long daysBetween = rateQuery.daysSchedulingForTransfer();
 
         Integer difference = 0;
         return daysBetween == difference;
     }
 
-    private BigDecimal calculateRate() {
+    protected BigDecimal calculate() {
         BigDecimal value = rateQuery.getValue();
 
-        Double rate = 0.03;
+        Double percentage = 0.03;
         return value
-                .multiply(BigDecimal.valueOf(rate))
+                .multiply(BigDecimal.valueOf(percentage))
                 .add(BigDecimal.valueOf(3));
     }
 }
