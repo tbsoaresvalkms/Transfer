@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Transfer {
     private Long sender;
     private Long receiver;

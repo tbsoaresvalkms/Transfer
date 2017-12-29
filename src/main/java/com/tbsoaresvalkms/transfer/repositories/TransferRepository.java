@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Component
 public class TransferRepository {
-    private static final Map<Long, List<Transfer>> transfers = new HashMap<>();
+    private static Map<Long, List<Transfer>> transfers = new HashMap<>();
 
     public Transfer save(Transfer transfer) {
         Long sender = transfer.getSender();
@@ -23,5 +23,9 @@ public class TransferRepository {
 
     public List<Transfer> findAll(Long account) {
         return transfers.getOrDefault(account, new ArrayList<>());
+    }
+
+    public void clean() {
+        transfers = new HashMap<>();
     }
 }
