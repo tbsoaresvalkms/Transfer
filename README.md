@@ -2,14 +2,36 @@
 
 Para verificar os resources da API, olhe aqui: [Index](doc/index.md)
 
-##Requisitos
+
+## Requisitos
 * Java 8+
 * Lombok (necessário plugin em IDEs)
 * Maven
 * port 8080  (port utilizada no teste de integração)
 
+## Executando o projeto
+`git clone https://github.com/tbsoaresvalkms/transfer.git`
 
-##Componentes da Aplicação
+`cd transfer`
+
+`mvn clean`
+
+`mvn spring-boot:run`
+
+## Executando os tests
+(A aplicação precisa estar rodando por causa do teste de integração)
+
+`git clone https://github.com/tbsoaresvalkms/transfer.git`
+
+`cd transfer`
+
+`mvn clean`
+
+`mvn spring-boot:run`
+
+`mvn test`
+
+## Componentes da Aplicação
  
 * Spring Boot
 * Spring Rest
